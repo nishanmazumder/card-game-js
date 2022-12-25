@@ -56,8 +56,8 @@ function loadGame() {
 function startGame() {
   gameInitialize();
   startRound();
-  filpCards(true);
-
+  // filpCards(true);
+  shuffleCards();
 }
 
 function startRound() {
@@ -84,19 +84,29 @@ function cardMapToNewPosition() {
   let secondPos = "";
   let area = "";
 
-  cards.forEach(card, (index) => {
-    if (cardPosition[index] === 1) {
+  cards.forEach((card, index) => {
+    if (cardPosition[index] == 1) {
       area += "a ";
-    } else if (cardPosition[index] === 2) {
+    } else if (cardPosition[index] == 2) {
       area += "b ";
-    } else if (cardPosition[index] === 3) {
+    } else if (cardPosition[index] == 3) {
       area += "c ";
-    } else if (cardPosition[index] === 4) {
+    } else if (cardPosition[index] == 4) {
       area += "d ";
+    }
+
+    if (index == 1) {
+      firstPos = area.substring(0, area.length - 1);
+      area = "";
+    } else if (index == 3) {
+      secondPos = area.substring(0, area.length - 1);
     }
   });
 
-   console.log(area);
+
+  // console.log(`"${firstPos}" "${secondPos}"`)
+
+  return `"${firstPos}" "${secondPos}"`;
 }
 
 // cardMapToNewPosition()
@@ -108,13 +118,13 @@ function setCardToAppropiatePos() {
 }
 
 function randomizeCardPos() {
-  let rand1 = Math.floor(Math.random() * totalCards) + 1;
-  let rand2 = Math.floor(Math.random() * totalCards) + 1;
+  const rand1 = Math.floor(Math.random() * totalCards) + 1;
+  const rand2 = Math.floor(Math.random() * totalCards) + 1;
 
-  let temp = cardPosition[rand1 - 1];
+  const temp = cardPosition[rand1 - 1];
 
   cardPosition[rand1 - 1] = cardPosition[rand2 - 1];
-  cardPosition[rand1 - 2] = temp;
+  cardPosition[rand2 - 2] = temp;
 }
 
 function shuffleCards() {
